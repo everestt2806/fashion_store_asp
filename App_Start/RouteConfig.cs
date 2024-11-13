@@ -13,10 +13,20 @@ namespace FashionStore
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Route cho HomeController trong không gian tên chính
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "FashionStore.Controllers" } // Thêm không gian tên
+            );
+
+            // Route cho HomeController trong khu vực Admin
+            routes.MapRoute(
+                name: "Admin",
+                url: "Admin/{controller}/{action}/{id}",
+                defaults: new { action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "FashionStore.Areas.Admin.Controllers" } // Thêm không gian tên
             );
         }
     }
