@@ -1,19 +1,51 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_LayoutClient2.cshtml";
 }
+<style>
+    main {
+        background-color: #f8f9fa;
+        color: #343a40;
+        padding: 40px 0;
+    }
+
+
+    p {
+        line-height: 1.6;
+    }
+
+    ul {
+        list-style-type: disc;
+        margin-left: 20px;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+    /* Container Styles */
+    .container {
+        margin: 0 auto;
+    }
+
+    ul li {
+        list-style: none;
+    }
+</style>
 <main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
+    <div class="container">
+        <h2 id="title" style="color: #CC9966;">@ViewBag.Title</h2>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+        <div style="margin-top: 20px;">
+            <address style="margin-bottom: 15px;">
+                <strong>Nguyễn Văn Sơn</strong><br />
+                ID: 521H0148<br />
+                <abbr title="Phone">Phone:</abbr> 0384809098
+            </address>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
+            <address>
+                <strong>Support:</strong> <a href="mailto:everestt2806@gmail.com" style="color: #28a745;">Support</a><br />
+                <strong>Marketing:</strong> <a href="mailto:everestt2806@gmail.com" style="color: #dc3545;">Marketing</a>
+            </address>
+        </div>
+    </div>
 </main>

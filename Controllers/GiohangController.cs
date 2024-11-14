@@ -9,7 +9,7 @@ namespace FashionStore.Controllers
 {
     public class GiohangController : Controller
     {
-        private QLbanhang db = new QLbanhang();
+        private Models.FashionStoreEntities db = new Models.FashionStoreEntities();
         // GET: GioHang
         //Lấy giỏ hàng 
         public List<GioHang> LayGioHang()
@@ -26,7 +26,7 @@ namespace FashionStore.Controllers
         //Thêm giỏ hàng
         public ActionResult ThemGioHang(int iMasp, string strURL)
         {
-            SanPham sp = db.SanPhams.SingleOrDefault(n => n.MaSP == iMasp);
+            SanPham  sp = db.SanPhams.SingleOrDefault(n => n.MaSP == iMasp);
             if (sp == null)
             {
                 Response.StatusCode = 404;
@@ -167,7 +167,7 @@ namespace FashionStore.Controllers
             //Kiểm tra giỏ hàng
             if (Session["GioHang"] == null)
             {
-                RedirectToAction("Index", "Home");
+               return  RedirectToAction("Index", "Home");
             }
             Console.WriteLine(donhangForm);
             string diachinhanhang = donhangForm["DiaChiNhanHang"].ToString();
@@ -222,7 +222,7 @@ namespace FashionStore.Controllers
             //Kiểm tra đăng đăng nhập
             if (Session["use"] == null || Session["use"].ToString() == "")
             {
-                return RedirectToAction("Dangnhap", "User63133125");
+                return RedirectToAction("Dangnhap", "User");
             }
             //Kiểm tra giỏ hàng
             if (Session["GioHang"] == null)

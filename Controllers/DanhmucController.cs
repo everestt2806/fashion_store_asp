@@ -10,7 +10,7 @@ namespace FashionStore.Controllers
     public class DanhmucController : Controller
     {
         // GET: Danhmuc
-        QLbanhang db = new QLbanhang();
+        FashionStoreEntities db = new FashionStoreEntities();
         // GET: Danhmuc
         public ActionResult danhmucpartial()
         {

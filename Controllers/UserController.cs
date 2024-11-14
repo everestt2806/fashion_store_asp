@@ -12,7 +12,7 @@ namespace FashionStore.Controllers
 {
     public class UserController : Controller
     {
-        QLbanhang db = new QLbanhang();
+        FashionStoreEntities db = new FashionStoreEntities();
 
         // ĐĂNG KÝ
         public ActionResult Dangky()
@@ -106,7 +106,7 @@ namespace FashionStore.Controllers
 
         }
 
-        public ActionResult Profile(int? id)
+            new public ActionResult Profile(int? id)
         {
             if (id == null)
             {

@@ -12,7 +12,7 @@ namespace FashionStore.Controllers
 {
     public class DonhangController : Controller
     {
-        private QLbanhang db = new QLbanhang();
+        private FashionStoreEntities db = new FashionStoreEntities();
 
         // GET: Donhangs
         // Hiển thị danh sách đơn hàng
@@ -21,7 +21,7 @@ namespace FashionStore.Controllers
             //Kiểm tra đang đăng nhập
             if (Session["use"] == null || Session["use"].ToString() == "")
             {
-                return RedirectToAction("Dangnhap", "User63133125");
+                return RedirectToAction("Dangnhap", "User");
             }
             TaiKhoan kh = (TaiKhoan)Session["use"];
             int maND = kh.MaNguoiDung;

@@ -1,33 +1,117 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Molla";
+    Layout = "~/Views/Shared/_LayoutClient2.cshtml";
 }
+@using FashionStore.Models;
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!-- Google fonts-->
+    
+    <style>
+        /* Header Styles */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+            header img {
+                max-width: 100%;
+                height: auto;
+            }
+
+        /* Featured Images Styles */
+        .spnoibat {
+            margin-top: 20px;
+        }
+
+            .spnoibat img {
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                margin-bottom: 15px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+                .spnoibat img:hover {
+                    transform: scale(1.05);
+                    transition: transform 0.3s ease-in-out;
+                }
+
+        /* Centered Content Styles */
+        .text-center {
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        img.img-responsive {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Vibrant Colors */
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+
+
+        .spnoibat img {
+            animation: fadeIn 1s ease-in-out;
+        }
+        ul li {
+            list-style-type: none;
+        }
+    </style>
+    <title>Molla</title>
+</head>
+<body>
+ 
+
+    <br />
+    <header class="bg-body py-0">
+        <center>
+            <div class="container">
+                <div class="col-lg-12 col-md-8">
+                    <img src="~/Images/TRANG-CHU.svg" />
+                </div>
+            </div>
+        </center>
+    </header>
+    <br />
+    <div class="spnoibat">
+        <center>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="~/Images/" class="img-responsive" alt=""/>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/" class="img-responsive" alt=""/>
+                </div>
+                <div class="col-md-4">
+                    <img src="~/Images/" class="img-responsive" alt=""/>
+                </div>
+            </div>
+        </center>
     </div>
-</main>
+    <br />
+
+    @Html.Action("suapartial", "Sanpham")
+
+    @Html.Action("dauanpartial", "Sanpham")
+    <div class="bg-body py-0">
+        <center>
+            <div class="container">
+                <div class="col-lg-12 col-md-8">
+                    <img src="~/Images/TRANG-CHU-2.svg" />
+                </div>
+            </div>
+        </center>
+    </div>
+    <br />
+
+    @Html.Action("raupartial", "Sanpham")
+
+</body>
+</html>

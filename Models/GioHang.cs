@@ -15,7 +15,7 @@ namespace FashionStore.Models
         //    get { return iMaSP; }
         //    set { iMaSP = value; }
         //}
-        private QLbanhang db = new QLbanhang();
+        private FashionStoreEntities db = new FashionStoreEntities();
         public int iMasp { get; set; }
         public string sTensp { get; set; }
         public string sAnhBia { get; set; }
