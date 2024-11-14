@@ -46,7 +46,7 @@
             <td colspan="6" style="text-align:right">
 
                 @Html.ActionLink("Chỉnh sửa giỏ hàng", "SuaGioHang") <br />
-                @using (Html.BeginForm("ThanhToanDonHang", "Giohang", FormMethod.Post))
+                @using (Html.BeginForm("ThanhToanDonHang", "Giohang", new { @class = "" }))
                 {
                     <br /> <input type="submit" value="Đặt hàng" class="btn btn-warning" />
                 }

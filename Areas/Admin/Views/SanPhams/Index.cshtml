@@ -12,7 +12,7 @@
     @Html.ActionLink("Tạo sản phẩm", "Create")
 </p>
 <div>
-    @using (Html.BeginForm("Index", "SanPhams63133125", FormMethod.Get))
+    @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get))
     {
         <input type="text" name="searchString" placeholder="Nhập tên sản phẩm cần tìm" value="@ViewBag.SearchString" />
         <button type="submit">Search</button>

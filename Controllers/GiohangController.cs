@@ -162,7 +162,7 @@ namespace FashionStore.Controllers
             //Kiểm tra đăng nhập
             if (Session["use"] == null || Session["use"].ToString() == "")
             {
-                return RedirectToAction("Dangnhap", "User63133125");
+                return RedirectToAction("Dangnhap", "User");
             }
             //Kiểm tra giỏ hàng
             if (Session["GioHang"] == null)
@@ -205,34 +205,45 @@ namespace FashionStore.Controllers
                 db.ChiTietDonHangs.Add(ctDH);
             }
             db.SaveChanges();
-            return RedirectToAction("Index", "Donhangs63133125");
+            return RedirectToAction("Index", "Donhang");
         }
         #endregion
 
         public ActionResult ThanhToanDonHang()
         {
-
             ViewBag.MaTT = new SelectList(new[]
-                {
-                    new { MaTT = 1, TenPT="Thanh toán tiền mặt" },
-                    new { MaTT = 2, TenPT="Thanh toán chuyển khoản" },
-                }, "MaTT", "TenPT", 1);
-            ViewBag.MaNguoiDung = new SelectList(db.TaiKhoans, "MaNguoiDung", "HoTen");
+            {
+        new { MaTT = 1, TenPT="Thanh toán tiền mặt" },
+        new { MaTT = 2, TenPT="Thanh toán chuyển khoản" },
+    }, "MaTT", "TenPT", 1);
 
-            //Kiểm tra đăng đăng nhập
+            // Kiểm tra đăng nhập
             if (Session["use"] == null || Session["use"].ToString() == "")
             {
                 return RedirectToAction("Dangnhap", "User");
             }
-            //Kiểm tra giỏ hàng
+
+            // Kiểm tra giỏ hàng
             if (Session["GioHang"] == null)
             {
-                RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
-            //Thêm đơn hàng
-            DonHang ddh = new DonHang();
+
+            // Lấy thông tin user đang đăng nhập
             TaiKhoan kh = (TaiKhoan)Session["use"];
+
+            // Tạo SelectList chỉ với thông tin của user hiện tại
+            ViewBag.MaNguoiDung = new SelectList(
+                db.TaiKhoans.Where(x => x.MaNguoiDung == kh.MaNguoiDung),
+                "MaNguoiDung",
+                "HoTen",
+                kh.MaNguoiDung
+            );
+
+            // Tạo đơn hàng mới
+            DonHang ddh = new DonHang();
             List<GioHang> gh = LayGioHang();
+
             decimal tongtien = 0;
             foreach (var item in gh)
             {
@@ -242,10 +253,9 @@ namespace FashionStore.Controllers
 
             ddh.MaNguoiDung = kh.MaNguoiDung;
             ddh.NgayDat = DateTime.Now;
-            ChiTietDonHang ctDH = new ChiTietDonHang();
+
             ViewBag.tongtien = tongtien;
             return View(ddh);
-
         }
 
     }
