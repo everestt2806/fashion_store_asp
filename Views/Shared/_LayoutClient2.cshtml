@@ -1,176 +1,418 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="~/Content/style.css" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Molla Fashion Store</title>
+
     <!-- Favicon-->
     <link rel="icon" href="~/Images/logo-icon.png" />
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Bootstrap icons-->
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="~/Content/style.css" />
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/css/styles.css")
-    @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 70vh;
+        }
+
+        .wrapper {
+            flex: 1 0 auto;
+        }
+
+        main {
+            flex: 1 0 auto;
+            min-height: calc(100vh - 200px); /* Adjust as needed */
+        }
+
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-nav .nav-link {
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333333 !important;
+            padding: 10px 15px;
+            transition: color 0.3s ease;
+        }
+
+            .navbar-nav .nav-link:hover {
+                color: #CC9966 !important;
+            }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            opacity:0.8
+        }
+
+        .dropdown-item {
+            font-family: 'Crimson Text', serif;
+            font-size: 16px;
+            color: #333333;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: #f8f9fa;
+                color: #CC9966;
+                transform: translateX(5px);
+            }
+
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .btn-outline-secondary {
+            border-color: #CC9966;
+            color: #CC9966;
+            font-family: 'Crimson Text', serif;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #CC9966;
+                color: white;
+            }
+
+
+        .dropdown-divider {
+            margin: 8px 0;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .nav-link.active {
+            color: #CC9966 !important;
+            font-weight: 700;
+        }
+
+        /* Footer Style*/
+        footer {
+            font-family: 'Crimson Text', serif;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+
+            footer a {
+                transition: color 0.3s ease;
+            }
+
+                footer a:hover {
+                    color: #CC9966 !important;
+                }
+
+            footer .btn-outline-light:hover {
+                background-color: #CC9966;
+                border-color: #CC9966;
+            }
+
+            footer .social-links a {
+                width: 35px;
+                height: 35px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                border: 1px solid rgba(255,255,255,0.3);
+                transition: all 0.3s ease;
+            }
+
+                footer .social-links a:hover {
+                    background-color: #CC9966;
+                    border-color: #CC9966;
+                }
+
+            footer h5 {
+                font-weight: 600;
+                letter-spacing: 1px;
+            }
+
+            footer .input-group .form-control {
+                background-color: rgba(255,255,255,0.1);
+                border-color: rgba(255,255,255,0.1);
+                color: white;
+            }
+
+                footer .input-group .form-control::placeholder {
+                    color: rgba(255,255,255,0.6);
+                }
+
+                footer .input-group .form-control:focus {
+                    box-shadow: none;
+                    border-color: #CC9966;
+                }
+
+        .user-links a {
+            font-family: 'Crimson Text', serif;
+            font-size: 22px;
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+            /* Nút Đăng ký */
+            .user-links a:first-child {
+                background-color: #2C3E50;
+                color: white !important;
+                border: 1px solid #2C3E50;
+            }
+
+                .user-links a:first-child:hover {
+                    background-color: #34495E;
+                    border-color: #34495E;
+                }
+
+            /* Nút Đăng nhập */
+            .user-links a:last-child {
+                border: 1px solid #2C3E50;
+                color: #2C3E50 !important;
+                margin-left: 10px;
+            }
+
+                .user-links a:last-child:hover {
+                    background-color: #2C3E50;
+                    color: white !important;
+                }
+
+
+    </style>
 </head>
 <body>
     @{ var u = Session["use"] as FashionStore.Models.TaiKhoan; }
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light text-bg-light">
-        <div class="container px-4 px-lg-5">
-            <a href="@Url.Action("Index", "Home", new { area = "" })" class="navbar-brand">
-                <img src="~/Images/logo.png" alt="Molla" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"> @Html.ActionLink("Trang chủ", "Index", "Home", new { area = "" }, new { @class = "nav-link activ" })</li>
-                    <li class="nav-item"> @Html.ActionLink("Giới thiệu", "About", "Home", new { area = "" }, new { @class = "nav-link activ" })</li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Sản phẩm
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li> @Html.ActionLink("Toàn bộ sản phẩm", "index", "Sanpham", new { area = "" }, new { @class = "dropdown-item" }) </li>
 
-                            <li><hr class="dropdown-divider" /></li>
-                            <li> @Html.Action("danhmucpartial", "Danhmuc", new { @class = "dropdown-item" }) </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"> @Html.ActionLink("Liên hệ", "Contact", "Home", new { area = "" }, new { @class = "nav-link activ" })</li>
-                    <li class="nav-item"> @Html.ActionLink("Đơn hàng", "Index", "Donhang", new { area = "" }, new { @class = "nav-link activ" })</li>
-                </ul>
-                <form class="d-flex">
-                    <button class="btn btn-outline-secondary" type="submit">
-                        @Html.Action("GioHangPartial", "Giohang", new { @class = "giohang" })
-                    </button>
-                    <ul class="navbar-nav ms-auto ">
-                        @{ if (u != null)
+    <div class="wrapper">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container px-4 px-lg-5">
+                <a href="@Url.Action("Index", "Home", new { area = "" })" class="navbar-brand">
+                    <img src="~/Images/logo.png" alt="Molla" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item">
+                            @Html.ActionLink("Trang chủ", "Index", "Home", new { area = "" },
+         new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Giới thiệu", "About", "Home", new { area = "" },
+         new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Sản phẩm
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                    @Html.ActionLink("Toàn bộ sản phẩm", "index", "Sanpham",
+                                        new { area = "" }, new { @class = "dropdown-item" })
+                                </li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li>
+                                    @Html.Action("danhmucpartial", "Danhmuc"); 
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Liên hệ", "Contact", "Home", new { area = "" },
+                                new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Đơn hàng", "Index", "Donhang", new { area = "" },
+                                new { @class = "nav-link" })
+                        </li>
+                    </ul>
+                    <form class="d-flex">
+                        <button class="btn btn-outline-secondary me-3" type="submit">
+                            @Html.Action("GioHangPartial", "Giohang")
+                        </button>
+                        <div class="user-links">
+                            @if (u != null)
                             {
-                                <div class="col-sm-4 col-md-0">
-                                    <a style="color: #CC9966" href="@Url.Action("Profile", "User", new { id = u.MaNguoiDung  })">
+                                <div class="d-flex align-items-center">
+                                    <a href="@Url.Action("Profile", "User", new { id = u.MaNguoiDung })"
+                                       class="me-3" style="color: #CC9966">
                                         Xin chào: @u.Email
                                     </a>
-                                    &nbsp;
-                                    @*@Html.ActionLink("ĐĂNG XUẤT", "DangXuat", "User", new { style = "color:red" })*@
-                                    <a style="color:red" href="/User/DangXuat"> ĐĂNG XUẤT</a>
+                                    <a href="/User/DangXuat" style="color: #dc3545">ĐĂNG XUẤT</a>
                                 </div>
                             }
                             else
                             {
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                                    <li class="nav-item">@Html.ActionLink("Đăng ký", "Dangky", "User", new { area = "" }, new { @class = "nav-link activ" })</li>
-                                    &nbsp;
-                                    <li class="nav-item">@Html.ActionLink("Đăng nhập", "Dangnhap", "User", new { area = "" }, new { @class = "nav-link activ" })</li>
-                                </ul>
-                            } }
-                    </ul>
-                </form>
+                                <div class="user-links d-flex">
+                                    <a href="@Url.Action("Dangky", "User")">Đăng ký</a>
+                                    <a href="@Url.Action("Dangnhap", "User")">Đăng nhập</a>
+                                </div>
+
+                            }
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-grow-1">
+            @RenderBody()
+        </main>
+    </div>
 
     <!-- Footer-->
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <!-- Cột 1 - Thông tin liên hệ -->
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Liên hệ với chúng tôi</h5>
+                    <p class="mb-2">
+                        <i class="fas fa-home me-3"></i>
+                        1168/9 Lê Văn Lương, xã Phước Kiển, Nhà Bè, TP.HCM
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-envelope me-3"></i>
+                        nguyensonttag@gmail.com
+                    </p>
+                    <p class="mb-2">
+                        <i class="fas fa-phone me-3"></i>
+                        +84384809098
+                    </p>
+                </div>
 
-    @RenderBody()
+                <!-- Cột 2 - Links -->
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="@Url.Action("Index", "Home")" class="text-white text-decoration-none">
+                                <i class="fas fa-angle-right me-2"></i>Trang chủ
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="@Url.Action("About", "Home")" class="text-white text-decoration-none">
+                                <i class="fas fa-angle-right me-2"></i>Giới thiệu
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="@Url.Action("Index", "Sanpham")" class="text-white text-decoration-none">
+                                <i class="fas fa-angle-right me-2"></i>Sản phẩm
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="@Url.Action("Contact", "Home")" class="text-white text-decoration-none">
+                                <i class="fas fa-angle-right me-2"></i>Liên hệ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Cột 3 - Social Media -->
+                <div class="col-lg-4">
+                    <h5 class="text-uppercase mb-4">Theo dõi chúng tôi</h5>
+                    <div class="d-flex gap-3">
+                        <a href="https://www.facebook.com/everestt.2806" class="text-white fs-5">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-white fs-5">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-white fs-5">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-white fs-5">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+
+                    <!-- Newsletter -->
+                    <div class="mt-4">
+                        <h5 class="text-uppercase mb-4">Đăng ký nhận tin</h5>
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Email của bạn">
+                            <button class="btn btn-outline-light" type="button">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center p-3 mt-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 Copyright:
+            <a class="text-white text-decoration-none" href="#">Molla Fashion Store</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="~/Content/js/scripts.js"></script>
+    <script src="~/Content/ckeditor/ckfinder/ckfinder.js"></script>
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/adapters/jquery.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @RenderSection("DoanJS", required: false)
+
+    <script>
+        $(document).ready(function () {
+            // Kích hoạt dropdown
+            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+                return new bootstrap.Dropdown(dropdownToggleEl)
+            });
+
+            // Thêm class active cho nav-link hiện tại
+            var currentUrl = window.location.pathname;
+            $('.navbar-nav .nav-link').each(function () {
+                var linkUrl = $(this).attr('href');
+                if (currentUrl === linkUrl) {
+                    $(this).addClass('active');
+                }
+            });
+        });
+    </script>
 </body>
-
-<!-- Footer-->
-<footer class="footer bg-dark py-3 mt-2">
-    <div class="footer-middle">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-lg-3">
-                    <div class="widget widget-about">
-                        <img src="~/Images/logo-footer.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
-
-                    </div><!-- End .widget about-widget -->
-                </div><!-- End .col-sm-6 col-lg-3 -->
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="widget ">
-                        <h4 class="widget-title text-white">Hữu ích</h4><!-- End .widget-title -->
-
-                        <ul class="widget-list text-secondary list-unstyled">
-                            <li>Giới thiệu</li>
-                            <li>Cách mua trên Molla</li>
-                            <li>FAQ</li>
-                            <li>Liên hệ</li>
-                            <li>Đăng nhập</li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-6 col-lg-3 -->
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="widget">
-                        <h4 class="widget-title text-white">Dịch vụ</h4><!-- End .widget-title -->
-
-                        <ul class="widget-list text-secondary list-unstyled">
-                            <li> Phương thức thanh toán </li>
-                            <li> Chính sách hoàn tiền </li>
-                            <li> Hoàn hàng </li>
-                            <li> Giao hàng </li>
-                            <li> Chính sách và điều kiện </li>
-                            <li> Chính sách bảo mật </li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-6 col-lg-3 -->
-
-                <div class="col-sm-6 col-lg-3">
-                    <div class="widget">
-                        <h4 class="widget-title text-white">Tài khoản của tôi</h4><!-- End .widget-title -->
-
-                        <ul class="widget-list text-secondary list-unstyled">
-                            <li> Đăng ký </li>
-                            <li> Giỏ hàng </li>
-                            <li> Yêu thích </li>
-                            <li> Theo dõi đơn hàng </li>
-                            <li> Hỗ trợ </li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-6 col-lg-3 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-    </div><!-- End .footer-middle -->
-
-    <div class="footer-bottom">
-        <div class="container">
-            <p class="footer-copyright text-secondary">Copyright © Molla. All Rights Reserved.</p><!-- End .footer-copyright -->
-            <figure class="footer-payments">
-                <img src="~/Images/payments.png" alt="Payment methods" width="272" height="20">
-            </figure><!-- End .footer-payments -->
-        </div><!-- End .container -->
-    </div><!-- End .footer-bottom -->
-</footer><!-- End .footer -->
-
-<script src="~/Content/js/scripts.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="~/Content/ckeditor/ckfinder/ckfinder.js"></script>
-
-<script src="~/Content/ckeditor/ckeditor.js"></script>
-
-<script src="~/Content/ckeditor/adapters/jquery.js"></script>
-
-<script src="~/Content/js/bootstrap.bundle.min.js"></script>
-<script>
-</script>
-
-@RenderSection("DoanJS", false)
 </html>
+

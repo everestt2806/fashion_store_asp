@@ -9,15 +9,13 @@ namespace FashionStore.Controllers
 {
     public class DanhmucController : Controller
     {
-        // GET: Danhmuc
         FashionStoreEntities db = new FashionStoreEntities();
-        // GET: Danhmuc
+
         public ActionResult danhmucpartial()
         {
             var danhmuc = db.LoaiHangs.ToList();
             return PartialView(danhmuc);
 
         }
-
     }
 }

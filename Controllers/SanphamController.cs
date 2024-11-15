@@ -19,6 +19,18 @@ namespace FashionStore.Controllers
                              .ToList();
             return View(sanPhams);
         }
+        public ActionResult SanPhamBanChay()
+        {
+            var sanPhamBanChay = db.SanPhams
+                .Include(s => s.LoaiHang)
+                .Include(s => s.NhaCungCap)
+                .OrderByDescending(p => p.SoLuong) // Sắp xếp theo số lượng bán giảm dần
+                .Take(8) // Lấy 10 sản phẩm bán chạy nhất
+                .ToList();
+
+            return View(sanPhamBanChay);
+        }
+
 
         public ActionResult suapartial()
         {

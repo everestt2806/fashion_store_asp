@@ -3207,7 +3207,7 @@
     <Content Include="Views\Sanpham\dauanpartial.cshtml" />
     <Content Include="Views\Sanpham\Index.cshtml" />
     <Content Include="Views\Sanpham\raupartial.cshtml" />
-    <Content Include="Views\Sanpham\suapartial.cshtml" />
+    <Content Include="Views\Sanpham\SanPhamBanChay.cshtml" />
     <Content Include="Views\Sanpham\xemchitiet.cshtml" />
     <Content Include="Views\Sanpham\xemchitietdanhmuc.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
