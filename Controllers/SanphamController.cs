@@ -19,6 +19,20 @@ namespace FashionStore.Controllers
                              .ToList();
             return View(sanPhams);
         }
+
+        public ActionResult GetProductImage(string imageName)
+        {
+            if (string.IsNullOrEmpty(imageName))
+                return File(Server.MapPath("~/Images/default-product.jpg"), "image/jpeg");
+
+            var path = Server.MapPath("~/Images/" + imageName);
+            if (!System.IO.File.Exists(path))
+                return File(Server.MapPath("~/Images/default-product.jpg"), "image/jpeg");
+
+            // Đọc file và trả về
+            return File(path, "image/jpeg", imageName);
+        }
+
         public ActionResult SanPhamBanChay()
         {
             var sanPhamBanChay = db.SanPhams
@@ -32,22 +46,22 @@ namespace FashionStore.Controllers
         }
 
 
-        public ActionResult suapartial()
+        public ActionResult AoBestSeller()
         {
             var ip = db.SanPhams.Where(n => n.MaLoai == 1).Take(4).ToList();
             return PartialView("suapartial", ip);
         }
 
-        public ActionResult raupartial()
+        public ActionResult QuanBestSeller()
         {
             var ip = db.SanPhams.Where(n => n.MaLoai == 2).Take(4).ToList();
-            return PartialView("raupartial", ip);
+            return PartialView("QuanBestSeller", ip);
         }
 
-        public ActionResult dauanpartial()
+        public ActionResult VayDamBestSeller()
         {
             var ip = db.SanPhams.Where(n => n.MaLoai == 3).Take(4).ToList();
-            return PartialView("dauanpartial", ip);
+            return PartialView("VayDamBestSeller", ip);
         }
 
         public ActionResult xemchitiet(int Masp = 0)

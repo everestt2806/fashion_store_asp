@@ -1,82 +1,196 @@
 ﻿@model FashionStore.Models.SanPham
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi tiết sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Chi tiết sản phẩm</h2>
+<style>
+    .product-details {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 30px;
+    }
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiHang.TenLoai)
-        </dt>
+    .details-header {
+        background: linear-gradient(135deg, #CC9966, #2c3e50);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.LoaiHang.TenLoai)
-        </dd>
+    .product-info {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+        margin-top: 20px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.NhaCungCap.TenNCC)
-        </dt>
+    .product-image {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.NhaCungCap.TenNCC)
-        </dd>
+        .product-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TenSP)
-        </dt>
+            .product-image img:hover {
+                transform: scale(1.05);
+            }
 
-        <dd>
-            @Html.DisplayFor(model => model.TenSP)
-        </dd>
+    .info-group {
+        margin-bottom: 15px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.GiaBan)
-        </dt>
+    .info-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
 
-        <dd>
-            @String.Format("{0:0,0}", Model.GiaBan) VNĐ
-        </dd>
+    .info-value {
+        color: #34495e;
+        font-size: 1.1rem;
+        padding: 8px 0;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
+    .action-buttons {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
+    .btn-action {
+        padding: 10px 25px;
+        border-radius: 5px;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
+    .btn-delete {
+        background: #e74c3c;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
+        .btn-delete:hover {
+            background: #c0392b;
+            color: white;
+            text-decoration: none;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AnhSP)
-        </dt>
+    .btn-edit {
+        background: #2ecc71;
+    }
 
-        <dd>
-            <img src="/Images/@Html.DisplayFor(model => model.AnhSP)" width="200px" height="150px" />
-        </dd>
+        .btn-edit:hover {
+            background: #27ae60;
+            color: white;
+            text-decoration: none;
+        }
 
-    </dl>
+    .btn-back {
+        color: #2c3e50;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-back:hover {
+            color: #CC9966;
+            text-decoration: none;
+        }
+
+    .description {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="details-header">
+    <h2><i class="fas fa-box-open mr-2"></i>Chi tiết sản phẩm</h2>
 </div>
-<button class="btn btn-danger">
-    @Html.ActionLink("Xóa", "Delete", new { id = Model.MaSP }, new { @style = "color:white;" })
-</button>
 
-<button class="btn btn-success">
-    @Html.ActionLink("Sửa", "Edit", new { id = Model.MaSP }, new { @style = "color:white;" })
-</button>
-<br />
-<br />
-<p>
-    @Html.ActionLink("Trở về", "Index")
-</p>
+<div class="product-details">
+    <div class="product-info">
+        <div class="product-image">
+            @if (!string.IsNullOrEmpty(Model.AnhSP))
+            {
+                <img src="@Url.Content("~/Images/" + Model.AnhSP)"
+                     alt="@Model.TenSP"
+                     onerror="this.src='@Url.Content("~/Images/no-image.png")'" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/Images/no-image.png")" alt="No Image" />
+            }
+        </div>
+
+
+
+        <div class="product-details-info">
+            <div class="info-group">
+                <div class="info-label">Tên sản phẩm</div>
+                <div class="info-value">@Model.TenSP</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Loại hàng</div>
+                <div class="info-value">@Model.LoaiHang.TenLoai</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Nhà cung cấp</div>
+                <div class="info-value">@Model.NhaCungCap.TenNCC</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Giá bán</div>
+                <div class="info-value">@String.Format("{0:0,0}", Model.GiaBan) VNĐ</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Số lượng</div>
+                <div class="info-value">@Model.SoLuong</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Mô tả</div>
+                <div class="info-value description">@Html.Raw(Model.MoTa)</div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="@Url.Action("Delete", new { id = Model.MaSP })" class="btn-action btn-delete">
+                    <i class="fas fa-trash"></i> Xóa
+                </a>
+                <a href="@Url.Action("Edit", new { id = Model.MaSP })" class="btn-action btn-edit">
+                    <i class="fas fa-edit"></i> Sửa
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <a href="@Url.Action("Index")" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Trở về danh sách
+    </a>
+</div>

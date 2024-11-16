@@ -38,6 +38,21 @@ namespace FashionStore.Areas.Admin.Controllers
             return RedirectPermanent("~/Home/Index");
         }
 
+        public ActionResult GetProductImage(string imageName)
+        {
+            if (string.IsNullOrEmpty(imageName))
+            {
+                return null;
+            }
+
+            var imagePath = Server.MapPath("~/Images/" + imageName);
+            if (System.IO.File.Exists(imagePath))
+            {
+                return File(imagePath, "image/jpeg"); // hoặc "image/png" tùy vào định dạng ảnh
+            }
+            return null;
+        }
+
 
         // GET: SanPhams/Details/5
         public ActionResult Details(int? id)

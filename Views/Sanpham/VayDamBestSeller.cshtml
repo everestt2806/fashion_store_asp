@@ -1,49 +1,50 @@
-﻿@model IEnumerable<FashionStore.Models.SanPham>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutClient2.cshtml";
-}
-
+﻿@using FashionStore.Models;
+@model List<SanPham>
 <section class="py-1">
     <center>
-        <h3 class="section-title">
-            TẤT CẢ SẢN PHẨM
-        </h3>
+        <h3 class="section-title">CÁC MẪU VÁY ĐẦM BÁN CHẠY</h3>
     </center>
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var item in Model)
             {
+                var timestamp = DateTime.Now.Ticks;
                 <div class="col mb-5">
-                    <div class="card">
+                    <div class="card h-100">
                         <!-- Product image-->
-                        <a href="@Url.Action("xemchitiet", new {@MaSP=item.MaSP })" class="product-link">
+                        <a href="@Url.Action("xemchitiet", new { MaSP = item.MaSP })" class="product-link">
                             <div class="product-image-container">
-                                <img src="/Images/@Html.DisplayFor(model => item.AnhSP)"
-                                     class="product-image"
-                                     alt="@item.TenSP" />
+                                @if (!string.IsNullOrEmpty(item.AnhSP))
+                                {
+                                   <img src="@Url.Action("GetProductImage", "Sanpham", new { imageName = item.AnhSP })"
+                                        class="img-responsive product-image"
+                                        alt="@item.TenSP" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Images/default-product.jpg")"
+                                         class="img-responsive product-image"
+                                         alt="Default Image" />
+                                }
                             </div>
                         </a>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="product-name fw-bolder">@item.TenSP</h5>
-                                <!-- Product price-->
-                                <span class="price">Giá: @String.Format("{0:0,0}", @item.GiaBan) VND</span>
+                                <h5 class="product-name">@item.TenSP</h5>
+                                <span class="price">@String.Format("{0:0,0}", item.GiaBan) VND</span>
                             </div>
                         </div>
                         <!-- Product actions-->
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
-                                @using (Html.BeginForm("ThemGioHang", "Giohang", new { @iMaSP = item.MaSP, @strURL = Request.Url.ToString() }))
+                                @using (Html.BeginForm("ThemGioHang", "Giohang", new { iMaSP = item.MaSP, strURL = Request.Url.ToString() }))
                                 {
                                     <button type="submit" class="btn-add-to-cart">
-                                        <div class="btn-content">
+                                        <span class="btn-content">
                                             <i class="fas fa-shopping-cart"></i>
-                                            <span class="btn-text">Thêm vào giỏ hàng</span>
-                                        </div>
+                                            <span class="btn-text">Thêm vào giỏ</span>
+                                        </span>
                                     </button>
                                 }
                             </div>
@@ -67,16 +68,16 @@
         padding-bottom: 10px;
     }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, #3498db, transparent);
-        }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #3498db, transparent);
+    }
 
     .product-image-container {
         position: relative;
@@ -110,10 +111,10 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
 
-        .card:hover {
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
+    .card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
 
     .product-name {
         color: #2c3e50;
@@ -128,9 +129,9 @@
         transition: color 0.3s ease;
     }
 
-        .product-name:hover {
-            color: #3498db;
-        }
+    .product-name:hover {
+        color: #3498db;
+    }
 
     .price {
         color: #e74c3c;
@@ -204,4 +205,3 @@
         transition: 0s;
     }
 </style>
-
