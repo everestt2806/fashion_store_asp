@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using FashionStore.Models;
 using PagedList;
+using System.IO;
 
 namespace FashionStore.Areas.Admin.Controllers
 
@@ -70,6 +71,7 @@ namespace FashionStore.Areas.Admin.Controllers
         }
 
         // GET: SanPhams/Create
+        // GET: SanPhams/Create
         public ActionResult Create()
         {
             ViewBag.MaLoai = new SelectList(db.LoaiHangs, "MaLoai", "TenLoai");
@@ -82,19 +84,57 @@ namespace FashionStore.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaSP,TenSP,GiaBan,SoLuong,MoTa,MaLoai,MaNCC,AnhSP")] SanPham sanPham)
+        public ActionResult Create(SanPham sanPham, HttpPostedFileBase AnhSP)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.SanPhams.Add(sanPham);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+
+                    if (sanPham.GiaBan.ToString().Contains(","))
+                    {
+                        string giaBanStr = sanPham.GiaBan.ToString().Replace(",", "");
+                        decimal giaBan;
+                        if (decimal.TryParse(giaBanStr, out giaBan))
+                        {
+                            sanPham.GiaBan = giaBan;
+                        }
+                    }
+
+                    // Kiểm tra nếu người dùng chọn ảnh
+                    if (AnhSP != null && AnhSP.ContentLength > 0)
+                    {
+                        // Tạo tên ảnh mới (chắc chắn không trùng lặp)
+                        string fileName = Path.GetFileName(AnhSP.FileName);
+                        string filePath = Path.Combine(Server.MapPath("~/Images"), fileName);
+
+                        // Lưu ảnh vào thư mục "Images/Products" trong dự án
+                        AnhSP.SaveAs(filePath);
+
+                        // Lưu tên ảnh vào thuộc tính AnhSP của sản phẩm
+                        sanPham.AnhSP = fileName;
+                    }
+
+                    // Thêm sản phẩm vào database
+                    db.SanPhams.Add(sanPham);
+                    db.SaveChanges();
+
+                    // Chuyển hướng về trang Index sau khi thêm sản phẩm thành công
+                    TempData["SuccessMessage"] = "Thêm sản phẩm thành công!";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = "Có lỗi xảy ra: " + ex.Message;
             }
 
+            // Nếu có lỗi, hiển thị lại form với thông tin đã nhập
             ViewBag.MaLoai = new SelectList(db.LoaiHangs, "MaLoai", "TenLoai", sanPham.MaLoai);
             ViewBag.MaNCC = new SelectList(db.NhaCungCaps, "MaNCC", "TenNCC", sanPham.MaNCC);
             return View(sanPham);
         }
+
+
 
         // GET: SanPhams/Edit/5
         public ActionResult Edit(int? id)
@@ -118,17 +158,32 @@ namespace FashionStore.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaSP,TenSP,GiaBan,SoLuong,MoTa,MaLoai,MaNCC,AnhSP")] SanPham sanPham)
+        public ActionResult Edit([Bind(Include = "MaSP,TenSP,GiaBan,SoLuong,MoTa,MaLoai,MaNCC,AnhSP")] SanPham sanPham, HttpPostedFileBase imageInput)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(sanPham).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    // Xử lý upload ảnh nếu có
+                    if (imageInput != null && imageInput.ContentLength > 0)
+                    {
+                        var fileName = Path.GetFileName(imageInput.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                        imageInput.SaveAs(path);
+                        sanPham.AnhSP = fileName;
+                    }
+
+                    db.Entry(sanPham).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+                return Json(new { success = false, message = "Dữ liệu không hợp lệ" });
             }
-            ViewBag.MaLoai = new SelectList(db.LoaiHangs, "MaLoai", "TenLoai", sanPham.MaLoai);
-            ViewBag.MaNCC = new SelectList(db.NhaCungCaps, "MaNCC", "TenNCC", sanPham.MaNCC);
-            return View(sanPham);
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
+            }
         }
 
         // GET: SanPhams/Delete/5

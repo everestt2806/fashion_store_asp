@@ -5,30 +5,93 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Xóa loại hàng</h2>
+<div class="container-fluid">
+    <div class="page-header">
+        <h2><i class="fas fa-trash-alt me-2"></i>&nbsp Xóa loại hàng</h2>
+    </div>
 
-<div>
-    <h4>LoaiHang</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenLoai)
-        </dt>
+    <div class="card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Admin" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>&nbsp Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Admin/LoaiHangs" class="text-decoration-none">
+                            <i class="fas fa-tags me-1"></i>&nbsp Loại hàng
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <i class="fas fa-trash-alt me-1"></i>&nbsp Xóa loại hàng
+                    </li>
+                </ol>
+            </nav>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenLoai)
-        </dd>
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>&nbsp Bạn có chắc chắn muốn xóa loại hàng này?
+            </div>
 
-    </dl>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <div class="detail-label">@Html.DisplayNameFor(model => model.TenLoai)</div>
+                        <div class="detail-value">@Html.DisplayFor(model => model.TenLoai)</div>
+                    </div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Xóa" class="btn btn-danger" />
+                        <div class="mt-4 d-flex gap-3">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-trash-alt me-2"></i>&nbsp Xác nhận xóa
+                            </button>
+                            <a href="@Url.Action("Index")" class="btn btn-light btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>&nbsp Trở về
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-    }
-    <br />
-    @Html.ActionLink("Trở về", "Index")
+    </div>
 </div>
+
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #4e73df, #224abe);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .page-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 1.75rem;
+        }
+
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .breadcrumb-item a {
+        color: #4e73df;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #4e73df;
+        margin-bottom: 0.5rem;
+    }
+
+    .detail-value {
+        margin-bottom: 1.5rem;
+    }
+</style>

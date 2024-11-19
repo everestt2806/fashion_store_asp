@@ -3,169 +3,169 @@
 @{
     ViewBag.Title = "Quản lý sản phẩm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-    var grid = new WebGrid(Model, canPage: true, defaultSort: "id", rowsPerPage: 10);
+    var grid = new WebGrid(Model, canPage: true, defaultSort: "TenSP", rowsPerPage: 10);
 }
 
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2><i class="fas fa-box me-2"></i>&nbsp Quản lý sản phẩm</h2>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Admin/Home/Index" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>&nbsp Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <i class="fas fa-box me-1"></i>&nbsp Sản phẩm
+                    </li>
+                </ol>
+            </nav>
+            <div class="mb-3">
+                <a href="@Url.Action("Create")" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>&nbsp Thêm sản phẩm mới
+                </a>
+            </div>
+
+            <div class="search-container mb-4">
+                @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get, new { @class = "d-flex gap-2" }))
+                {
+                    <div class="input-group">
+                        <input type="text" name="searchString" class="form-control form-control-lg"
+                               placeholder="Tìm kiếm sản phẩm..." value="@ViewBag.SearchString" />
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-search me-2"></i>&nbsp Tìm kiếm
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <div class="table-responsive">
+                @grid.GetHtml(
+                    tableStyle: "table table-hover table-bordered custom-table",
+                    headerStyle: "bg-primary text-white fw-bold",
+                    alternatingRowStyle: "alternating-row",
+                    columns: grid.Columns(
+                        grid.Column("TenSP", "Tên Sản Phẩm", style: "align-middle"),
+                        grid.Column("LoaiHang.TenLoai", "Loại Hàng", style: "align-middle"),
+                        grid.Column("NhaCungCap.TenNCC", "Nhà Cung Cấp", style: "align-middle"),
+                        grid.Column("GiaBan", "Giá Bán",
+                            format: @<text>@item.GiaBan.ToString("#,##0 đ")</text>,
+style: "align-middle text-end"),
+grid.Column("SoLuong", "Số Lượng", style: "align-middle text-center"),
+grid.Column("MoTa", "Mô Tả",
+format: @<text>
+            @(item.MoTa != null && item.MoTa.Length > 50
+                                    ? new HtmlString(item.MoTa.Substring(0, 50) + "...")
+                                    : new HtmlString(item.MoTa ?? "Không có mô tả"))
+        </text>,
+ style: "align-middle"),
+ grid.Column(header: "Thao tác",
+ format: @<text>
+            <div class="btn-group" role="group">
+                <a href="@Url.Action("Edit", new { id = item.MaSP })"
+                   class="btn btn-warning btn-sm" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a href="@Url.Action("Details", new { id = item.MaSP })"
+                   class="btn btn-info btn-sm" title="Chi tiết">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+                <a href="@Url.Action("Delete", new { id = item.MaSP })"
+                   class="btn btn-danger btn-sm" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </text> ,
+ style: "align-middle text-center")
+ )
+ )
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
-    .product-header {
-        background: linear-gradient(135deg, #CC9966, #2c3e50);
-        color: white;
-        padding: 25px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
 
-    .search-container {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 25px;
-    }
-
-    .search-input {
-        width: 300px;
-        padding: 10px 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-right: 10px;
-    }
-
-    .search-button {
-        padding: 10px 20px;
-        background: #CC9966;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-        .search-button:hover {
-            background: #2c3e50;
-        }
-
-    .create-button {
-        padding: 12px 25px;
-        background: #2ecc71;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-    }
-
-        .create-button:hover {
-            background: #27ae60;
-            text-decoration: none;
-            color: white;
-        }
-
-    .grid-container {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-
-    .table {
-        width: 100%;
-        margin-bottom: 0;
-    }
-
-        .table th {
-            background: #f8f9fa;
-            color: #2c3e50;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        .table td {
-            vertical-align: middle;
-        }
-
-    .action-link {
-        padding: 6px 12px;
-        border-radius: 4px;
+    .table.table-hover.table-bordered th,
+    .table.table-hover.table-bordered thead tr th {
         color: white !important;
-        text-decoration: none;
-        transition: all 0.3s ease;
+        font-weight: bold !important;
     }
 
-    .view-link {
-        background: #3498db;
+    .custom-table th {
+        color: white !important;
     }
 
-        .view-link:hover {
-            background: #2980b9;
-            text-decoration: none;
+        .custom-table th a {
+            color: white !important;
         }
+
+    .page-header {
+        background: linear-gradient(135deg, #4e73df, #224abe);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .page-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 1.75rem;
+        }
+
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .breadcrumb-item a {
+        color: #4e73df;
+    }
+
+    .search-container .input-group {
+        max-width: 600px;
+    }
+
+    .table th {
+        background-color: #4e73df !important;
+    }
+
+    .alternating-row {
+        background-color: rgba(0,0,0,.05);
+    }
+
+    .btn-group .btn {
+        margin: 0 2px;
+    }
 
     .webgrid-footer {
-        padding: 15px 0;
+        padding: 1rem 0;
         text-align: center;
     }
 
         .webgrid-footer a {
-            padding: 8px 15px;
-            margin: 0 3px;
-            background: #CC9966;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            background: #4e73df;
             color: white;
-            border-radius: 5px;
+            border-radius: 0.25rem;
             text-decoration: none;
-            transition: all 0.3s ease;
         }
 
             .webgrid-footer a:hover {
-                background: #2c3e50;
+                background: #224abe;
             }
 
     .webgrid-selected-page {
-        background: #2c3e50 !important;
+        background: #224abe !important;
     }
 </style>
-
-<div class="product-header">
-    <h2><i class="fas fa-box mr-2"></i>Quản lý sản phẩm</h2>
-    <a href="@Url.Action("Create")" class="create-button">
-        <i class="fas fa-plus mr-2"></i>Thêm sản phẩm mới
-    </a>
-</div>
-
-<div class="search-container">
-    @using (Html.BeginForm("Index", "SanPhams", FormMethod.Get, new { @class = "d-flex align-items-center" }))
-    {
-        <input type="text" name="searchString" class="search-input"
-               placeholder="Tìm kiếm sản phẩm..." value="@ViewBag.SearchString" />
-        <button type="submit" class="search-button">
-            <i class="fas fa-search mr-2"></i>Tìm kiếm
-        </button>
-    }
-</div>
-
-<div class="grid-container">
-    @grid.GetHtml(
-        tableStyle: "table table-bordered table-hover",
-        headerStyle: "webgrid-header",
-        footerStyle: "webgrid-footer",
-        alternatingRowStyle: "webgrid-alternating-row",
-        selectedRowStyle: "webgrid-selected-row",
-        rowStyle: "webgrid-row-style",
-        columns: grid.Columns(
-            grid.Column("TenSP", "Tên Sản Phẩm"),
-            grid.Column("LoaiHang.TenLoai", "Loại Hàng"),
-            grid.Column("NhaCungCap.TenNCC", "Nhà Cung Cấp"),
-            grid.Column("GiaBan", "Giá Bán", format: @<text>@item.GiaBan.ToString("#,##0 đ")</text>),
-grid.Column("SoLuong", "Số Lượng"),
-grid.Column("MoTa", "Mô Tả", format: @<text>@Html.Raw(item.MoTa.Length > 50 ? item.MoTa.Substring(0, 50) + "..." : item.MoTa)</text>),
-grid.Column(header: "Thao tác", format: @<text>
-    <a href="@Url.Action("Details", new { id = item.MaSP })" class="action-link view-link">
-        <i class="fas fa-eye"></i> Xem
-    </a>
-</text>)
-)
-)
-</div>

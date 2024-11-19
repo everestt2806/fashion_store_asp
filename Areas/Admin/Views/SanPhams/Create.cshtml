@@ -5,274 +5,327 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Thêm sản phẩm mới</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/Admin">Trang chủ</a></li>
-        <li class="breadcrumb-item"><a href="/Admin/SanPham">Sản phẩm</a></li>
-        <li class="breadcrumb-item active">Tạo mới</li>
-    </ol>
+<div class="container-fluid">
+    <div class="page-header">
+        <h2><i class="fas fa-plus-circle me-2"></i>&nbsp Thêm sản phẩm mới</h2>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <!-- Breadcrumb giữ nguyên -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Admin/Home/Index" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>&nbsp Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Admin/SanPhams" class="text-decoration-none">
+                            <i class="fas fa-box me-1"></i>&nbsp Sản phẩm
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <i class="fas fa-plus me-1"></i>&nbsp Tạo mới
+                    </li>
+                </ol>
+            </nav>
 
-    @using (Html.BeginForm("Create", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data", id = "createForm", onsubmit = "return validateForm()" }))
-    {
-        @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Create", "SanPhams", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", id = "createProductForm" }))
+            {
+                @Html.AntiForgeryToken()
 
-        <div class="row">
-            <div class="col-xl-8">
-                <!-- Thông tin cơ bản -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-info-circle me-1"></i>
-                        Thông tin cơ bản
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
-                            <input type="text" id="TenSP" name="TenSP" class="form-control form-control-lg" placeholder="Nhập tên sản phẩm" />
-                            <div class="invalid-feedback">Vui lòng nhập tên sản phẩm</div>
-                        </div>
+                <div class="row">
+                    <!-- Thông tin cơ bản -->
+                    <div class="col-md-6">
+                        <div class="section-divider">
+                            <h5 class="text-primary mb-4">
+                                <i class="fas fa-info-circle me-2"></i>&nbsp Thông tin cơ bản
+                            </h5>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Giá bán <span class="text-danger">*</span></label>
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.TenSP, "Tên sản phẩm", new { @class = "form-label required" })
                                 <div class="input-group">
-                                    <input type="text" id="GiaBan" name="GiaBan" class="form-control" placeholder="Nhập giá bán" />
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-tag"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.TenSP, new { @class = "form-control form-control-lg", placeholder = "Nhập tên sản phẩm" })
+                                </div>
+                                <div class="invalid-feedback">Vui lòng nhập tên sản phẩm</div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.GiaBan, "Giá bán", new { @class = "form-label required" })
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.GiaBan, new { @class = "form-control form-control-lg", placeholder = "Nhập giá bán" })
                                     <span class="input-group-text">VNĐ</span>
                                 </div>
                                 <div class="invalid-feedback">Vui lòng nhập giá bán hợp lệ</div>
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Số lượng <span class="text-danger">*</span></label>
+
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.SoLuong, "Số lượng", new { @class = "form-label required" })
                                 <div class="input-group">
-                                    <input type="number" id="SoLuong" name="SoLuong" class="form-control" min="0" placeholder="Nhập số lượng" />
-                                    <span class="input-group-text">Cái</span>
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-cubes"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.SoLuong, new { @class = "form-control form-control-lg", placeholder = "Nhập số lượng" })
                                 </div>
                                 <div class="invalid-feedback">Vui lòng nhập số lượng hợp lệ</div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Mô tả sản phẩm</label>
-                            <textarea id="MoTa" name="MoTa" class="form-control"></textarea>
+                    <!-- Thông tin bổ sung -->
+                    <div class="col-md-6">
+                        <div class="section-divider">
+                            <h5 class="text-primary mb-4">
+                                <i class="fas fa-cog me-2"></i>&nbsp Thông tin bổ sung
+                            </h5>
+
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.MaLoai, "Loại sản phẩm", new { @class = "form-label required" })
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-list"></i>
+                                    </span>
+                                    @Html.DropDownList("MaLoai", null, "-- Chọn loại sản phẩm --", new { @class = "form-select form-select-lg" })
+                                </div>
+                                <div class="invalid-feedback">Vui lòng chọn loại sản phẩm</div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.MaNCC, "Nhà cung cấp", new { @class = "form-label required" })
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-building"></i>
+                                    </span>
+                                    @Html.DropDownList("MaNCC", null, "-- Chọn nhà cung cấp --", new { @class = "form-select form-select-lg" })
+                                </div>
+                                <div class="invalid-feedback">Vui lòng chọn nhà cung cấp</div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.AnhSP, "Ảnh sản phẩm", new { @class = "form-label required" })
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light">
+                                        <i class="fas fa-image"></i>
+                                    </span>
+                                    <input type="file" name="AnhSP" class="form-control form-control-lg" accept="image/*" required />
+                                </div>
+                                <div class="invalid-feedback">Vui lòng chọn ảnh sản phẩm</div>
+                                <div class="mt-3">
+                                    <img id="preview" src="#" alt="Preview" style="display:none; max-width: 200px;" class="img-thumbnail shadow-sm" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mô tả -->
+                    <div class="col-12">
+                        <div class="section-divider">
+                            <h5 class="text-primary mb-4">
+                                <i class="fas fa-align-left me-2"></i>&nbsp Mô tả sản phẩm
+                            </h5>
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", rows = "4", placeholder = "Nhập mô tả sản phẩm" })
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-xl-4">
-                <!-- Phân loại -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-tags me-1"></i>
-                        Phân loại
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Loại sản phẩm <span class="text-danger">*</span></label>
-                            @Html.DropDownList("MaLoai", null, "-- Chọn loại sản phẩm --", new { @class = "form-select" })
-                            <div class="invalid-feedback">Vui lòng chọn loại sản phẩm</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Nhà cung cấp <span class="text-danger">*</span></label>
-                            @Html.DropDownList("MaNCC", null, "-- Chọn nhà cung cấp --", new { @class = "form-select" })
-                            <div class="invalid-feedback">Vui lòng chọn nhà cung cấp</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hình ảnh -->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-image me-1"></i>
-                        Hình ảnh sản phẩm
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center mb-3">
-                            <img id="preview" src="/Content/images/no-image.png" class="img-fluid rounded" style="max-height: 200px;" />
-                        </div>
-                        <div class="d-grid">
-                            <label class="btn btn-outline-primary">
-                                <i class="fas fa-upload me-2"></i>&nbsp Chọn ảnh
-                                <input type="file" id="ImageFile" name="ImageFile" hidden accept="image/*" onchange="previewImage(this)" />
-                            </label>
-                            <div class="invalid-feedback">Vui lòng chọn ảnh sản phẩm</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Nút submit -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="@Url.Action("Index")" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left me-2"></i>&nbsp Quay lại
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-2"></i>&nbsp Lưu sản phẩm
+                <!-- Buttons -->
+                <div class="form-group mt-4 d-flex gap-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i>&nbsp Tạo sản phẩm
                     </button>
+                    <a href="/Admin/SanPhams" class="btn btn-light btn-lg">
+                        <i class="fas fa-times me-2"></i>&nbsp Hủy
+                    </a>
                 </div>
-            </div>
-        </div>
-    }
-</div>
-
-@section Styles {
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <style>
-        .card {
-            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
-        }
-
-        .card-header {
-            font-weight: 500;
-        }
-
-        .form-label {
-            font-weight: 500;
-        }
-
-        .invalid-feedback {
-            display: none;
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: #86b7fe;
-            box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
-        }
-
-        .btn-primary {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-        }
-
-            .btn-primary:hover {
-                background-color: #0b5ed7;
-                border-color: #0a58ca;
             }
-    </style>
-}
+        </div>
+
+    </div>
+
+</div>
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #4e73df, #224abe);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .page-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 1.75rem;
+        }
+
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .breadcrumb-item a {
+        color: #4e73df;
+        text-decoration: none;
+    }
+</style>
+
+
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
     <script>
-        // Khởi tạo Select2
         $(document).ready(function () {
-            $('.form-select').select2({
-                theme: 'bootstrap-5',
-                width: '100%'
+            // Form validation
+            $('#createProductForm').on('submit', async function (e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Validate Tên sản phẩm
+                if ($('#TenSP').val().trim() === '') {
+                    $('#TenSP').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#TenSP').removeClass('is-invalid');
+                }
+
+                // Validate Giá bán
+                const giaBanInput = $('#GiaBan');
+                const giaBanValue = giaBanInput.val().replace(/,/g, ''); 
+                if (giaBanValue === '' || isNaN(giaBanValue) || parseInt(giaBanValue) <= 0) {
+                    giaBanInput.addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    giaBanInput.removeClass('is-invalid');
+                    giaBanInput.val(giaBanValue);
+                }
+
+                // Validate Số lượng
+                if ($('#SoLuong').val().trim() === '' || isNaN($('#SoLuong').val()) || parseInt($('#SoLuong').val()) < 0) {
+                    $('#SoLuong').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#SoLuong').removeClass('is-invalid');
+                }
+
+                // Validate Loại sản phẩm
+                if ($('#MaLoai').val() === '') {
+                    $('#MaLoai').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#MaLoai').removeClass('is-invalid');
+                }
+
+                // Validate Nhà cung cấp
+                if ($('#MaNCC').val() === '') {
+                    $('#MaNCC').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('#MaNCC').removeClass('is-invalid');
+                }
+
+                // Validate Ảnh sản phẩm
+                if ($('input[name="AnhSP"]').get(0).files.length === 0) {
+                    $('input[name="AnhSP"]').addClass('is-invalid');
+                    isValid = false;
+                } else {
+                    $('input[name="AnhSP"]').removeClass('is-invalid');
+                }
+
+                if (!isValid) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Vui lòng điền đầy đủ thông tin bắt buộc',
+                        confirmButtonText: 'Đóng'
+                    });
+                    return false;
+                }
+
+                try {
+                    // Show loading state
+                    await Swal.fire({
+                        title: 'Đang xử lý...',
+                        text: 'Vui lòng chờ trong giây lát',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        },
+                        timer: 1000
+                    });
+
+                    // Tạo FormData object để gửi dữ liệu form bao gồm cả file
+                    const formData = new FormData(this);
+
+                    // Gửi request AJAX
+                    const response = await $.ajax({
+                        url: this.action,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    });
+
+                    // Hiển thị thông báo thành công
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: 'Thêm sản phẩm mới thành công',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    // Chuyển hướng về trang Index
+                    window.location.href = '/Admin/SanPhams';
+
+                } catch (error) {
+                    // Xử lý lỗi nếu có
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Có lỗi xảy ra khi thêm sản phẩm. Vui lòng thử lại!',
+                        confirmButtonText: 'Đóng'
+                    });
+                }
             });
 
-            // Khởi tạo CKEditor
-            ClassicEditor
-                .create(document.querySelector('#MoTa'))
-                .catch(error => {
-                    console.error(error);
-                });
-        });
+            // Reset validation on input
+            $('input, select').on('input change', function () {
+                $(this).removeClass('is-invalid');
+            });
 
-        // Format giá tiền
-        $('#GiaBan').on('input', function () {
-            let value = $(this).val().replace(/\D/g, '');
-            if (value) {
-                value = parseInt(value).toLocaleString('vi-VN');
+            // Format currency input
+            $('#GiaBan').on('input', function () {
+                let value = $(this).val().replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 $(this).val(value);
-            }
-        });
+            });
 
-        // Preview hình ảnh
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#preview').attr('src', e.target.result);
+            // Allow only numbers for SoLuong
+            $('#SoLuong').on('input', function () {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+
+            // Image preview
+            $('input[name="AnhSP"]').change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result).show();
+                    }
+                    reader.readAsDataURL(this.files[0]);
                 }
-                reader.readAsDataURL(input.files[0]);
-                $(input).removeClass('is-invalid');
-            }
-        }
-
-        // Validate form
-        function validateForm() {
-            let isValid = true;
-            let errorMessage = "";
-
-            // Reset validation
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').hide();
-
-            // Validate Tên sản phẩm
-            if ($('#TenSP').val().trim() === '') {
-                $('#TenSP').addClass('is-invalid');
-                $('#TenSP').next('.invalid-feedback').show();
-                errorMessage += "- Vui lòng nhập tên sản phẩm<br>";
-                isValid = false;
-            }
-
-            // Validate Giá bán
-            const giaBan = $('#GiaBan').val().replace(/[,.]/g, '');
-            if (giaBan === '' || parseInt(giaBan) <= 0) {
-                $('#GiaBan').addClass('is-invalid');
-                $('#GiaBan').parent().next('.invalid-feedback').show();
-                errorMessage += "- Vui lòng nhập giá bán hợp lệ<br>";
-                isValid = false;
-            }
-
-            // Validate Số lượng
-            const soLuong = $('#SoLuong').val();
-            if (soLuong === '' || parseInt(soLuong) < 0) {
-                $('#SoLuong').addClass('is-invalid');
-                $('#SoLuong').parent().next('.invalid-feedback').show();
-                errorMessage += "- Vui lòng nhập số lượng hợp lệ<br>";
-                isValid = false;
-            }
-
-            // Validate Loại sản phẩm
-            if ($('#MaLoai').val() === '') {
-                $('#MaLoai').addClass('is-invalid');
-                $('#MaLoai').next('.invalid-feedback').show();
-                errorMessage += "- Vui lòng chọn loại sản phẩm<br>";
-                isValid = false;
-            }
-
-            // Validate Nhà cung cấp
-            if ($('#MaNCC').val() === '') {
-                $('#MaNCC').addClass('is-invalid');
-                $('#MaNCC').next('.invalid-feedback').show();
-                errorMessage += "- Vui lòng chọn nhà cung cấp<br>";
-                isValid = false;
-            }
-
-            // Validate Hình ảnh
-            if ($('#ImageFile').val() === '') {
-                $('#ImageFile').addClass('is-invalid');
-                $('#ImageFile').next('.invalid-feedback').show();
-                errorMessage += "- Vui lòng chọn ảnh sản phẩm<br>";
-                isValid = false;
-            }
-
-            if (!isValid) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Vui lòng kiểm tra lại',
-                    html: errorMessage,
-                    confirmButtonText: 'Đóng'
-                });
-            }
-
-            return isValid;
-        }
-
-        // Remove validation khi người dùng nhập liệu
-        $('input, select').on('input change', function () {
-            $(this).removeClass('is-invalid');
-            $(this).next('.invalid-feedback').hide();
-            $(this).parent().next('.invalid-feedback').hide();
+            });
         });
     </script>
 }
+

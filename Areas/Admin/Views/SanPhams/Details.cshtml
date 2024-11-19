@@ -14,14 +14,23 @@
     }
 
     .details-header {
-        background: linear-gradient(135deg, #CC9966, #2c3e50);
+        background: linear-gradient(135deg, #4e73df, #224abe);
         color: white;
         padding: 20px;
         border-radius: 10px;
         margin-bottom: 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    }
+
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .breadcrumb-item a {
+        color: #4e73df;
+        text-decoration: none;
     }
 
     .product-info {
@@ -49,19 +58,23 @@
             }
 
     .info-group {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fc;
+        border-radius: 8px;
+        border-left: 4px solid #4e73df;
     }
 
     .info-label {
         font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 5px;
+        color: #4e73df;
+        margin-bottom: 8px;
         font-size: 0.9rem;
         text-transform: uppercase;
     }
 
     .info-value {
-        color: #34495e;
+        color: #2c3e50;
         font-size: 1.1rem;
         padding: 8px 0;
     }
@@ -73,7 +86,7 @@
     }
 
     .btn-action {
-        padding: 10px 25px;
+        padding: 12px 25px;
         border-radius: 5px;
         color: white;
         text-decoration: none;
@@ -82,41 +95,40 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
+        font-weight: 500;
     }
 
     .btn-delete {
-        background: #e74c3c;
+        background: #e74a3b;
     }
 
         .btn-delete:hover {
-            background: #c0392b;
+            background: #d52a1a;
             color: white;
-            text-decoration: none;
         }
 
     .btn-edit {
-        background: #2ecc71;
+        background: #1cc88a;
     }
 
         .btn-edit:hover {
-            background: #27ae60;
+            background: #169b6b;
             color: white;
-            text-decoration: none;
         }
 
     .btn-back {
-        color: #2c3e50;
+        color: #4e73df;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
         gap: 8px;
         margin-top: 20px;
         transition: all 0.3s ease;
+        font-weight: 500;
     }
 
         .btn-back:hover {
-            color: #CC9966;
-            text-decoration: none;
+            color: #224abe;
         }
 
     .description {
@@ -124,14 +136,31 @@
         padding: 15px;
         border-radius: 8px;
         margin-top: 10px;
+        line-height: 1.6;
     }
 </style>
 
 <div class="details-header">
-    <h2><i class="fas fa-box-open mr-2"></i>Chi tiết sản phẩm</h2>
+    <h2><i class="fas fa-box-open mr-2"></i> Chi tiết sản phẩm</h2>
 </div>
 
 <div class="product-details">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Admin/Home/Index">
+                    <i class="fas fa-home"></i> Trang chủ
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/Admin/SanPhams">
+                    <i class="fas fa-box"></i> Sản phẩm
+                </a>
+            </li>
+            <li class="breadcrumb-item active">Chi tiết sản phẩm</li>
+        </ol>
+    </nav>
+
     <div class="product-info">
         <div class="product-image">
             @if (!string.IsNullOrEmpty(Model.AnhSP))
@@ -146,45 +175,55 @@
             }
         </div>
 
-
-
         <div class="product-details-info">
             <div class="info-group">
-                <div class="info-label">Tên sản phẩm</div>
+                <div class="info-label">
+                    <i class="fas fa-tag mr-2"></i> Tên sản phẩm
+                </div>
                 <div class="info-value">@Model.TenSP</div>
             </div>
 
             <div class="info-group">
-                <div class="info-label">Loại hàng</div>
+                <div class="info-label">
+                    <i class="fas fa-list mr-2"></i> Loại hàng
+                </div>
                 <div class="info-value">@Model.LoaiHang.TenLoai</div>
             </div>
 
             <div class="info-group">
-                <div class="info-label">Nhà cung cấp</div>
+                <div class="info-label">
+                    <i class="fas fa-building mr-2"></i> Nhà cung cấp
+                </div>
                 <div class="info-value">@Model.NhaCungCap.TenNCC</div>
             </div>
 
             <div class="info-group">
-                <div class="info-label">Giá bán</div>
-                <div class="info-value">@String.Format("{0:0,0}", Model.GiaBan) VNĐ</div>
+                <div class="info-label">
+                    <i class="fas fa-money-bill mr-2"></i> Giá bán
+                </div>
+                <div class="info-value">@String.Format("{0:N0}", Model.GiaBan) VNĐ</div>
             </div>
 
             <div class="info-group">
-                <div class="info-label">Số lượng</div>
+                <div class="info-label">
+                    <i class="fas fa-cubes mr-2"></i> Số lượng
+                </div>
                 <div class="info-value">@Model.SoLuong</div>
             </div>
 
             <div class="info-group">
-                <div class="info-label">Mô tả</div>
+                <div class="info-label">
+                    <i class="fas fa-align-left mr-2"></i> Mô tả
+                </div>
                 <div class="info-value description">@Html.Raw(Model.MoTa)</div>
             </div>
 
             <div class="action-buttons">
-                <a href="@Url.Action("Delete", new { id = Model.MaSP })" class="btn-action btn-delete">
-                    <i class="fas fa-trash"></i> Xóa
-                </a>
                 <a href="@Url.Action("Edit", new { id = Model.MaSP })" class="btn-action btn-edit">
                     <i class="fas fa-edit"></i> Sửa
+                </a>
+                <a href="#" onclick="confirmDelete(@Model.MaSP)" class="btn-action btn-delete">
+                    <i class="fas fa-trash"></i> Xóa
                 </a>
             </div>
         </div>
@@ -194,3 +233,25 @@
         <i class="fas fa-arrow-left"></i> Trở về danh sách
     </a>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Xác nhận xóa?',
+                text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e74a3b',
+                cancelButtonColor: '#858796',
+                confirmButtonText: 'Xóa',
+                cancelButtonText: 'Hủy'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("Delete")/' + id;
+                }
+            })
+        }
+    </script>
+}

@@ -1,84 +1,143 @@
 ﻿@model IEnumerable<FashionStore.Models.DonHang>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var grid = new WebGrid(Model, canPage: true, defaultSort: "NgayDat", rowsPerPage: 5);
 }
 
-<h2>Đơn hàng</h2>
+<div class="container-fluid">
+    <div class="page-header">
+        <h2><i class="fas fa-shopping-cart me-2"></i>&nbsp Quản lý đơn hàng</h2>
+    </div>
 
-<p>
-    @Html.ActionLink("Tạo đơn hàng", "Create")
-</p>
-<table class="table table-bordered">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MaDon)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaiKhoan.HoTen)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayDat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TinhTrang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ThanhToan)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DiaChiNhanHang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TongTien) 
-        </th>
-        <th></th>
-    </tr>
+    <div class="card">
+        <div class="card-body">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Admin" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>&nbsp Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <i class="fas fa-shopping-cart me-1"></i>&nbsp Đơn hàng
+                    </li>
+                </ol>
+            </nav>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaDon)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TaiKhoan.HoTen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NgayDat)
-        </td>
-        <td>
-            @{ if (@item.TinhTrang == 0)
-                {
-                    <div style="color:red">Đang chờ xác nhận. </div> }
-                else if (@item.TinhTrang == 1)
-                {
-                    <div style="color:green">Đã xác nhận  </div> }
-                else
-                {
-                    <div style="color:orangered">Đang chờ xác nhận </div> } }
-      
-        </td>
-        <td>
-            @{ if (@item.ThanhToan == 1)
-                {
-                    <div style="color:red">Thanh toán tiền mặt</div> }
-                else if (@item.ThanhToan == 2)
-                {
-                    <div style="color:brown">Thanh toán chuyển khoản</div> } }
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DiaChiNhanHang)
-        </td>
-        <td>
-            @String.Format("{0:0,0}", item.TongTien) VNĐ
-        </td>
-        <td>
-            <button class="btn btn-primary">
-                @Html.ActionLink("Xem", "Details", new { id = item.MaDon }, new { @style = "color:white;" })
-            </button>
-        </td>
-    </tr>
-}
+            <div class="mb-3">
+                <a href="@Url.Action("Create")" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>&nbsp Tạo đơn hàng mới
+                </a>
+            </div>
 
-</table>
+            <div class="table-responsive">
+                @grid.GetHtml(
+                    tableStyle: "table table-hover table-bordered custom-table",
+                    headerStyle: "bg-primary text-white fw-bold",
+                    alternatingRowStyle: "alternating-row",
+                    columns: grid.Columns(
+                        grid.Column("MaDon", "Mã đơn", style: "align-middle"),
+                        grid.Column("TaiKhoan.HoTen", "Khách hàng", style: "align-middle"),
+                        grid.Column("NgayDat", "Ngày đặt",
+                            format: @<text>@item.NgayDat.ToString("dd/MM/yyyy HH:mm")</text>,
+style: "align-middle"),
+grid.Column("TinhTrang", "Tình trạng",
+format: @<text>
+                            @{
+                                if (item.TinhTrang == 0)
+                                {
+                                    <span class="badge bg-warning">Đang chờ xác nhận</span>
+                                }
+                                else if (item.TinhTrang == 1)
+                                {
+                                    <span class="badge bg-success">Đã xác nhận</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Đã hủy</span>
+                                }
+                            }
+</text>,
+style: "align-middle text-center"),
+grid.Column("ThanhToan", "Thanh toán",
+format: @<text>
+    @{
+        if (item.ThanhToan == 1)
+        {
+            <span class="badge bg-info">Tiền mặt</span>
+        }
+        else
+        {
+            <span class="badge bg-primary">Chuyển khoản</span>
+        }
+    }
+</text>,
+style: "align-middle text-center"),
+grid.Column("DiaChiNhanHang", "Địa chỉ nhận hàng", style: "align-middle"),
+grid.Column("TongTien", "Tổng tiền",
+format: @<text>@String.Format("{0:N0} VNĐ", item.TongTien)</text>,
+style: "align-middle text-end"),
+grid.Column(header: "Thao tác",
+format: @<text>
+    <div class="btn-group" role="group">
+        <a href="@Url.Action("Details", new { id = item.MaDon })" class="btn btn-info btn-sm">
+            <i class="fas fa-info-circle"></i>&nbsp Chi tiết
+        </a>
+        <a href="@Url.Action("Edit", new { id = item.MaDon })" class="btn btn-warning btn-sm">
+            <i class="fas fa-edit"></i>&nbsp Sửa
+        </a>
+        <a href="@Url.Action("Delete", new { id = item.MaDon })" class="btn btn-danger btn-sm">
+            <i class="fas fa-trash"></i>&nbsp Xóa
+        </a>
+    </div>
+</text>,
+style: "text-center align-middle")
+)
+)
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .table.table-hover.table-bordered th,
+    .table.table-hover.table-bordered thead tr th {
+        color: white !important;
+        font-weight: bold !important;
+    }
+
+    .custom-table th {
+        color: white !important;
+    }
+
+        .custom-table th a {
+            color: white !important;
+        }
+    /* Giữ nguyên các style từ trang Loại hàng và thêm một số style mới */
+    .badge {
+        font-size: 0.875rem;
+        padding: 0.5em 0.75em;
+    }
+
+    .text-end {
+        text-align: right !important;
+    }
+
+    /* Thêm animation cho badges */
+    .badge {
+        transition: all 0.3s ease;
+    }
+
+        .badge:hover {
+            transform: scale(1.1);
+        }
+
+    /* Style cho số tiền */
+    .text-end {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+</style>
