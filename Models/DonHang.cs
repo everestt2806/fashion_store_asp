@@ -16,7 +16,6 @@
         }
 
         [Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int MaDon { get; set; }
         [Display(Name = "Ngày đặt hàng")]
 
@@ -41,5 +40,7 @@
         public virtual ICollection<ChiTietDonHang> ChiTietDonHang { get; set; }
 
         public virtual TaiKhoan TaiKhoan { get; set; }
+
+
     }
 }

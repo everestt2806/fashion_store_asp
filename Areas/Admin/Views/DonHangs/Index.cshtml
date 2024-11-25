@@ -16,7 +16,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/Admin" class="text-decoration-none">
+                        <a href="/Admin/Home/Index" class="text-decoration-none">
                             <i class="fas fa-home me-1"></i>&nbsp Trang chủ
                         </a>
                     </li>
@@ -25,12 +25,6 @@
                     </li>
                 </ol>
             </nav>
-
-            <div class="mb-3">
-                <a href="@Url.Action("Create")" class="btn btn-primary">
-                    <i class="fas fa-plus me-2"></i>&nbsp Tạo đơn hàng mới
-                </a>
-            </div>
 
             <div class="table-responsive">
                 @grid.GetHtml(
@@ -56,7 +50,7 @@ format: @<text>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-danger">Đã hủy</span>
+            <span class="badge bg-warning">Đang chờ xác nhận</span>
                                 }
                             }
 </text>,
@@ -68,7 +62,7 @@ format: @<text>
         {
             <span class="badge bg-info">Tiền mặt</span>
         }
-        else
+        else if(item.ThanhToan == 2)
         {
             <span class="badge bg-primary">Chuyển khoản</span>
         }
@@ -103,6 +97,29 @@ style: "text-center align-middle")
 
 <style>
 
+    .page-header {
+        background: linear-gradient(135deg, #4e73df, #224abe);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 2rem;
+    }
+
+        .page-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 1.75rem;
+        }
+
+    .breadcrumb {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .breadcrumb-item a {
+        color: #4e73df;
+    }
     .table.table-hover.table-bordered th,
     .table.table-hover.table-bordered thead tr th {
         color: white !important;

@@ -1698,7 +1698,6 @@
     <Content Include="Images\icons\favicon.ico" />
     <Content Include="Images\icons\safari-pinned-tab.svg" />
     <Content Include="Images\icons\site.html" />
-    <Content Include="Images\logo-footer.png" />
     <Content Include="Images\logo-icon.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\nav-next-shadow.png" />
@@ -1745,8 +1744,6 @@
     <Content Include="Images\team\member-3.jpg" />
     <Content Include="Images\testimonials\user-1.jpg" />
     <Content Include="Images\testimonials\user-2.jpg" />
-    <Content Include="Images\TRANG-CHU-2.svg" />
-    <Content Include="Images\TRANG-CHU.svg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

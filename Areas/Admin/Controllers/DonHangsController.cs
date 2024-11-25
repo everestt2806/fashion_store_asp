@@ -98,9 +98,7 @@ namespace FashionStore.Areas.Admin.Controllers
             return View(donHang);
         }
 
-        // POST: DonHangs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Madon,NgayDat,TinhTrang,ThanhToan,DiaChiNhanHang,MaNguoiDung,TongTien")] DonHang donHang)
@@ -114,6 +112,8 @@ namespace FashionStore.Areas.Admin.Controllers
             ViewBag.MaNguoiDung = new SelectList(db.TaiKhoans, "MaNguoiDung", "HoTen", donHang.MaNguoiDung);
             return View(donHang);
         }
+
+
 
         // GET: DonHangs/Delete/5
         public ActionResult Delete(int? id)

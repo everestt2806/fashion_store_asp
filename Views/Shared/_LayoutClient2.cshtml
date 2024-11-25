@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Molla Fashion Store - Thời trang cao cấp" />
+    <meta name="description" content="Trendy Mall Fashion Store - Thời trang cao cấp" />
     <meta name="author" content="Your Name" />
-    <title>@ViewBag.Title - Molla Fashion Store</title>
+    <title>@ViewBag.Title Mall Fashion Store</title>
 
     <!-- Favicon -->
     <link rel="icon" href="~/Images/logo-icon.png" />
@@ -49,7 +49,7 @@
         }
 
         .navbar-brand img {
-            height: 40px;
+            height: 50px;
             width: auto;
         }
 
@@ -86,14 +86,19 @@
 
         /* Button Styles */
         .btn-cart, .auth-button {
+            text-decoration: none;
             padding: 8px 16px;
             border-radius: 4px;
             transition: all 0.3s ease;
             font-size: 15px;
             font-weight: 500;
         }
+        .btn-cart a{
+            text-decoration: none;
+        }
 
         .btn-cart {
+            text-decoration: none;
             border: 1px solid var(--primary-color);
             color: var(--primary-color);
             margin-right: 15px;
@@ -201,7 +206,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a href="@Url.Action("Index", "Home")" class="navbar-brand">
-                    <img src="~/Images/logo.png" alt="Molla" />
+                    <img src="~/Images/logo.png" alt="Trendy Mall" />
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -307,7 +312,7 @@
     </div>
 
     <div class="footer-bottom text-center">
-        <p class="mb-0">© 2024 Molla Fashion Store. All rights reserved.</p>
+        <p class="mb-0">© 2024 Trendy Mall Fashion Store. All rights reserved.</p>
     </div>
 </footer>
 

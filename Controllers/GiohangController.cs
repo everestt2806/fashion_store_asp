@@ -159,22 +159,22 @@ namespace FashionStore.Controllers
         [HttpPost]
         public ActionResult DatHang(FormCollection donhangForm)
         {
-            //Kiểm tra đăng nhập
+            // Existing checks for login and cart existence
             if (Session["use"] == null || Session["use"].ToString() == "")
             {
                 return RedirectToAction("Dangnhap", "User");
             }
-            //Kiểm tra giỏ hàng
             if (Session["GioHang"] == null)
             {
-               return  RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
-            Console.WriteLine(donhangForm);
+
+            // Collecting order information from form
             string diachinhanhang = donhangForm["DiaChiNhanHang"].ToString();
             string thanhtoan = donhangForm["MaTT"].ToString();
             int ptthanhtoan = Int32.Parse(thanhtoan);
 
-            //Thêm đơn hàng
+            // Prepare the order entity
             DonHang ddh = new DonHang();
             TaiKhoan kh = (TaiKhoan)Session["use"];
             List<GioHang> gh = LayGioHang();
@@ -183,15 +183,32 @@ namespace FashionStore.Controllers
             ddh.ThanhToan = ptthanhtoan;
             ddh.DiaChiNhanHang = diachinhanhang;
             decimal tongtien = 0;
+
+            // Calculate total price and prepare to update stock
             foreach (var item in gh)
             {
                 decimal thanhtien = item.iSoLuong * (decimal)item.dDonGia;
                 tongtien += thanhtien;
+
+                // Update stock in the database
+                var product = db.SanPhams.SingleOrDefault(p => p.MaSP == item.iMasp);
+                if (product != null && product.SoLuong >= item.iSoLuong)
+                {
+                    product.SoLuong -= item.iSoLuong; // Decrement the stock
+                }
+                else
+                {
+                    // Handle the case where there is not enough stock
+                    // For example, return an error message to the user
+                    return View("Error", new HandleErrorInfo(new Exception("Not enough stock for product ID: " + item.iMasp), "Giohang", "DatHang"));
+                }
             }
+
             ddh.TongTien = tongtien;
             db.DonHangs.Add(ddh);
-            db.SaveChanges();
-            //Thêm chi tiết đơn hàng
+            db.SaveChanges(); // Save the order
+
+            // Add order details
             foreach (var item in gh)
             {
                 ChiTietDonHang ctDH = new ChiTietDonHang();
@@ -204,9 +221,12 @@ namespace FashionStore.Controllers
                 ctDH.PhuongThucThanhToan = 1;
                 db.ChiTietDonHangs.Add(ctDH);
             }
-            db.SaveChanges();
+
+            db.SaveChanges(); // Save order details
+            Session["GioHang"] = null;
             return RedirectToAction("Index", "Donhang");
         }
+
         #endregion
 
         public ActionResult ThanhToanDonHang()

@@ -5,77 +5,67 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<div class="page-wrapper">
-    <div class="container-fluid px-4">
-        <div class="card shadow-sm border-0 mb-4">
-            <!-- Card header với gradient -->
-            <div class="card-header">
-                <div class="d-flex align-items-center">
-                    <i class="fas fa-tags fa-2x me-3"></i>
-                    <div>
-                        <h4 class="mb-0">&nbsp Thêm loại hàng mới</h4>
-                        <small class="text-white-50">&nbsp Điền thông tin loại hàng bên dưới</small>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid">
+    <div class="page-header">
+        <h2><i class="fas fa-plus-circle me-2"></i>&nbsp Thêm loại hàng mới</h2>
+    </div>
 
-            <!-- Card body -->
-            <div class="card-body">
-                <!-- Breadcrumb với icons -->
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="/Admin/Home/Index" class="text-decoration-none">
-                                <i class="fas fa-home me-1"></i>&nbsp Trang chủ
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="/Admin/LoaiHangs" class="text-decoration-none">
-                                <i class="fas fa-tags me-1"></i>&nbsp Loại hàng
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">
-                            <i class="fas fa-plus me-1"></i>&nbsp Tạo mới
-                        </li>
-                    </ol>
-                </nav>
+    <div class="card">
+        <div class="card-body">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/Admin/Home/Index" class="text-decoration-none">
+                            <i class="fas fa-home me-1"></i>&nbsp Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="/Admin/LoaiHangs" class="text-decoration-none">
+                            <i class="fas fa-tags me-1"></i>&nbsp Loại hàng
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <i class="fas fa-plus me-1"></i>&nbsp Tạo mới
+                    </li>
+                </ol>
+            </nav>
 
-                @using (Html.BeginForm("Create", "LoaiHangs", FormMethod.Post, new { @class = "needs-validation", id = "createCategoryForm" }))
-                {
-                    @Html.AntiForgeryToken()
+            @using (Html.BeginForm("Create", "LoaiHangs", FormMethod.Post, new { @class = "needs-validation", id = "createCategoryForm" }))
+            {
+                @Html.AntiForgeryToken()
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="section-divider">
-                                <h5 class="text-primary mb-4">
-                                    <i class="fas fa-info-circle me-2"></i>&nbsp Thông tin loại hàng
-                                </h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-divider">
+                            <h5 class="text-primary mb-4">
+                                <i class="fas fa-info-circle me-2"></i>&nbsp Thông tin loại hàng
+                            </h5>
 
-                                <div class="form-group mb-4">
-                                    @Html.LabelFor(model => model.TenLoai, "Tên loại hàng", new { @class = "form-label required" })
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-light">
-                                            <i class="fas fa-tag"></i>
-                                        </span>
-                                        @Html.TextBoxFor(model => model.TenLoai, new { @class = "form-control form-control-lg", placeholder = "Nhập tên loại hàng" })
-                                    </div>
-                                    <div class="invalid-feedback">Vui lòng nhập tên loại hàng</div>
+                            <div class="form-group mb-4">
+                                @Html.LabelFor(model => model.TenLoai, "Tên loại hàng", new { @class = "form-label required" })
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-tag"></i>
+                                    </span>
+                                    @Html.TextBoxFor(model => model.TenLoai, new { @class = "form-control form-control-lg", placeholder = "Nhập tên loại hàng" })
                                 </div>
+                                <div class="invalid-feedback">Vui lòng nhập tên loại hàng</div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Buttons -->
-                    <div class="form-group mt-4 d-flex gap-3">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-save me-2"></i>&nbsp Tạo loại hàng
-                        </button>
-                        <a href="/Admin/LoaiHangs" class="btn btn-light btn-lg">
-                            <i class="fas fa-times me-2"></i>&nbsp Hủy
-                        </a>
-                    </div>
-                }
-            </div>
+                <!-- Buttons -->
+                <div class="form-group mt-4 d-flex gap-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-save me-2"></i>&nbsp Tạo loại hàng
+                    </button>
+                    <a href="/Admin/LoaiHangs" class="btn btn-light btn-lg">
+                        <i class="fas fa-times me-2"></i>&nbsp Hủy
+                    </a>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -88,33 +78,33 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .card-header {
+        /* Page header */
+        .page-header {
             background: linear-gradient(135deg, #4e73df, #224abe);
-            color: white;
-            padding: 25px;
-            border-radius: 10px 10px 0 0;
-            margin-bottom: 0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
         }
 
-        /* Form controls styling */
-        .form-control {
+            .page-header h2 {
+                color: white;
+                margin: 0;
+                font-size: 1.75rem;
+            }
+
+        /* Form controls */
+        .form-control, .form-select {
             border-radius: 5px;
             padding: 10px 15px;
             border: 1px solid #ddd;
-            transition: all 0.3s ease;
         }
-
-            .form-control:focus {
-                border-color: #4e73df;
-                box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
-            }
 
         .input-group-text {
             background: #f8f9fa;
             border: 1px solid #ddd;
         }
 
-        /* Label styling */
+        /* Labels */
         .form-label {
             font-weight: 600;
             color: #2c3e50;
@@ -126,16 +116,28 @@
             color: #e74a3b;
         }
 
-        /* Section styling */
+        /* Section divider */
         .section-divider {
             padding: 20px;
             background: white;
             border-radius: 10px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        /* Button styling */
+        /* Breadcrumb */
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+
+        .breadcrumb-item a {
+            color: #4e73df;
+            text-decoration: none;
+        }
+
+        /* Buttons */
         .btn {
             padding: 12px 25px;
             border-radius: 5px;
@@ -152,27 +154,6 @@
                 background: #224abe;
                 transform: translateY(-2px);
             }
-
-        .btn-light {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-        }
-
-            .btn-light:hover {
-                background: #e9ecef;
-            }
-
-        /* Breadcrumb styling */
-        .breadcrumb {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 25px;
-        }
-
-        .breadcrumb-item a {
-            color: #4e73df;
-        }
     </style>
 }
 
@@ -181,73 +162,79 @@
     <script>
         $(document).ready(function () {
             // Form validation
-            $('#createCategoryForm').on('submit', function (e) {
+            $('#createCategoryForm').on('submit', async function (e) {
                 e.preventDefault();
                 let isValid = true;
+                let errorMessages = [];
 
                 // Validate Tên loại hàng
                 if ($('#TenLoai').val().trim() === '') {
                     $('#TenLoai').addClass('is-invalid');
+                    errorMessages.push('Tên loại hàng không được để trống');
                     isValid = false;
-                } else {
-                    $('#TenLoai').removeClass('is-invalid');
                 }
 
                 if (!isValid) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Lỗi!',
-                        text: 'Vui lòng điền tên loại hàng',
+                        html: errorMessages.join('<br>'),
                         confirmButtonText: 'Đóng'
                     });
                     return false;
                 }
 
-                // Show loading state
-                Swal.fire({
-                    title: 'Đang xử lý...',
-                    text: 'Vui lòng chờ trong giây lát',
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
+                try {
+                    // Show loading state
+                    await Swal.fire({
+                        title: 'Đang xử lý...',
+                        text: 'Vui lòng chờ trong giây lát',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        },
+                        timer: 1000
+                    });
 
-                // Submit form if valid
-                this.submit();
+                    // Submit form
+                    const formData = new FormData(this);
+
+                    // Gửi request AJAX
+                    const response = await $.ajax({
+                        url: this.action,
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    });
+
+                    // Hiển thị thông báo thành công
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: 'Thêm loại hàng mới thành công',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+
+                    // Chuyển hướng về trang Index
+                    window.location.href = '/Admin/LoaiHangs';
+
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: 'Có lỗi xảy ra khi thêm loại hàng. Vui lòng thử lại!',
+                        confirmButtonText: 'Đóng'
+                    });
+                }
             });
 
-            // Reset validation on input
-            $('input').on('input', function() {
+            // Reset validation khi nhập liệu
+            $('input, textarea').on('input', function () {
                 $(this).removeClass('is-invalid');
             });
-
-            // Show success/error messages from TempData
-            @if (TempData["SuccessMessage"] != null)
-            {
-                <text>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: '@TempData["SuccessMessage"]',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-                </text>
-            }
-
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <text>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: '@TempData["ErrorMessage"]',
-                    confirmButtonText: 'Đóng'
-                });
-                </text>
-            }
         });
     </script>
 }

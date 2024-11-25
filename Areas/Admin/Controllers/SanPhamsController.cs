@@ -164,14 +164,26 @@ namespace FashionStore.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (sanPham.GiaBan.ToString().Contains(","))
+                    {
+                        string giaBanStr = sanPham.GiaBan.ToString().Replace(",", "");
+                        decimal giaBan;
+                        if (decimal.TryParse(giaBanStr, out giaBan))
+                        {
+                            sanPham.GiaBan = giaBan;
+                        }
+                    }
+
                     // Xử lý upload ảnh nếu có
                     if (imageInput != null && imageInput.ContentLength > 0)
                     {
                         var fileName = Path.GetFileName(imageInput.FileName);
-                        var path = Path.Combine(Server.MapPath("~/Images"), fileName);
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + fileName; // Tạo tên file duy nhất
+                        var path = Path.Combine(Server.MapPath("~/Images"), uniqueFileName);
                         imageInput.SaveAs(path);
-                        sanPham.AnhSP = fileName;
+                        sanPham.AnhSP = uniqueFileName; // Cập nhật tên file mới
                     }
+
 
                     db.Entry(sanPham).State = EntityState.Modified;
                     db.SaveChanges();
@@ -185,6 +197,7 @@ namespace FashionStore.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Có lỗi xảy ra: " + ex.Message });
             }
         }
+
 
         // GET: SanPhams/Delete/5
         public ActionResult Delete(int? id)

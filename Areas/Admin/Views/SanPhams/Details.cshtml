@@ -217,15 +217,6 @@
                 </div>
                 <div class="info-value description">@Html.Raw(Model.MoTa)</div>
             </div>
-
-            <div class="action-buttons">
-                <a href="@Url.Action("Edit", new { id = Model.MaSP })" class="btn-action btn-edit">
-                    <i class="fas fa-edit"></i> Sửa
-                </a>
-                <a href="#" onclick="confirmDelete(@Model.MaSP)" class="btn-action btn-delete">
-                    <i class="fas fa-trash"></i> Xóa
-                </a>
-            </div>
         </div>
     </div>
 
@@ -234,24 +225,4 @@
     </a>
 </div>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Xác nhận xóa?',
-                text: "Bạn có chắc chắn muốn xóa sản phẩm này?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#e74a3b',
-                cancelButtonColor: '#858796',
-                confirmButtonText: 'Xóa',
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '@Url.Action("Delete")/' + id;
-                }
-            })
-        }
-    </script>
-}
+

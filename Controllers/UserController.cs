@@ -36,13 +36,13 @@ namespace FashionStore.Controllers
                     var check = db.TaiKhoans.FirstOrDefault(s => s.Email == taiKhoan.Email);
                     if (check == null)
                     {
-                        //return RedirectToAction("Dangnhap");
+                        taiKhoan.IDQuyen = 2;
+
+                        db.TaiKhoans.Add(taiKhoan);
+                        db.SaveChanges();
+
                         ViewBag.RegOk = "Đăng kí thành công. Đăng nhập ngay";
                         ViewBag.isReg = true;
-                        // Thêm người dùng  mới
-                        db.TaiKhoans.Add(taiKhoan);
-                        // Lưu lại vào cơ sở dữ liệu
-                        db.SaveChanges();
                         return View("Dangky");
                     }
                     else

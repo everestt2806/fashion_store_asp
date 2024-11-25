@@ -37,8 +37,13 @@ namespace FashionStore.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            // Thêm dòng này để đếm số sản phẩm của nhà cung cấp
+            ViewBag.SoLuongSanPham = db.SanPhams.Count(sp => sp.MaNCC == id);
+
             return View(nhaCungCap);
         }
+
 
         // GET: NhaCungCaps/Create
         public ActionResult Create()

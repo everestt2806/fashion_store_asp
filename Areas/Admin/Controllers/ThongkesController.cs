@@ -27,7 +27,7 @@ namespace FashionStore.Areas.Admin.Controllers
                                        DienThoai = g.FirstOrDefault().TaiKhoan.DienThoai,
                                        SoLuong = g.Count()
                                    });
-                var dataFinal = dataThongke.OrderByDescending(s => s.TongTien).Take(5).ToList();
+                var dataFinal = dataThongke.OrderByDescending(s => s.TongTien).ToList();
                 return View(dataFinal);
             }
             return RedirectPermanent("~/Home/Index");
