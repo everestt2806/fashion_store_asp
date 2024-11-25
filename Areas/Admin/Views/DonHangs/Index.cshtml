@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Quản lý đơn hàng";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-    var grid = new WebGrid(Model, canPage: true, defaultSort: "NgayDat", rowsPerPage: 5);
+    var grid = new WebGrid(Model, canPage: true, defaultSort: "~MaDon", rowsPerPage: 5);
 }
 
 <div class="container-fluid">
